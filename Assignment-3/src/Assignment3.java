@@ -1,28 +1,40 @@
 import javax.swing.*;
-
 import java.lang.System;
 
 public class Assignment3 {
-	public static void main(String args[]) {
-		String carDescription = JOptionPane.showInputDialog("Car description");
+	private static Car car;
 
-		int fuelCap = 0;
-		while (fuelCap <= 0)
-			fuelCap = parseInt(JOptionPane.showInputDialog("Fuel capacity"));
+	public static void main(String[] args) {
+		String carDescription = JOptionPane.showInputDialog("Enter the car's description");
 
-		String engineDescription = JOptionPane.showInputDialog("Engine description");
+		int fuelCap = promptInt("Enter the car's fuel capacity");
 
-		int mpg = 0;
-		while (mpg <= 0)
-			mpg = parseInt(JOptionPane.showInputDialog("Miles per Gallon"));
+		String engineDescription = JOptionPane.showInputDialog("Enter the car's engine description");
 
-		int maxSpeed = 0;
-		while (maxSpeed <= 0)
-			maxSpeed = parseInt(JOptionPane.showInputDialog("Max speed"));
+		int mpg = promptInt("Enter the engine's miles per Gallon");
 
-		JOptionPane.showMessageDialog(null, String.format("%s (Engine: %s, %d mph, %d MPG, %d gallons)", carDescription, engineDescription, maxSpeed, mpg, fuelCap));
+		int maxSpeed = promptInt("Enter the car's max speed");
 
-		DrivePanel panel = new DrivePanel();
+		car = new Car(carDescription, fuelCap, new Engine(engineDescription, mpg, maxSpeed));
+		JOptionPane.showMessageDialog(
+				null,
+				car.getDescription(), // String.format("%s (Engine: %s, %d mph, %d MPG, %d gallons)", carDescription, engineDescription, maxSpeed, mpg, fuelCap),
+				"Car Info",
+				JOptionPane.INFORMATION_MESSAGE
+		);
+
+		int legs = promptInt("How many legs are in this trip?");
+
+		double[][] legValues = new double[legs][];
+		for (int i = 0; i < legs; i++) {
+			int dist = promptInt("Enter this leg's distance", "Leg " + (i + 1));
+			double xRatio = promptDouble("Enter this leg's X ratio", "Leg " + (i + 1));
+			double yRatio = promptDouble("Enter this leg's Y ratio", "Leg " + (i + 1));
+
+			legValues[i] = new double[] { dist, xRatio, yRatio };
+		}
+
+		DrivePanel panel = new DrivePanel(legValues, car);
 		JFrame app = new JFrame();
 
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -30,6 +42,26 @@ public class Assignment3 {
 		app.setSize(600, 600);
 		app.setTitle("Drive visualizer");
 		app.setVisible(true);
+	}
+
+	private static int promptInt(String message) {
+		int input = 0;
+		while (input <= 0)
+			input = parseInt(JOptionPane.showInputDialog(message));
+
+		return input;
+	}
+
+	private static int promptInt(String message, String title) {
+		int input = 0;
+		while (input <= 0)
+			input = parseInt(JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE));
+
+		return input;
+	}
+
+	private static double promptDouble(String message, String title) {
+		return Double.parseDouble(JOptionPane.showInputDialog(null, message, title, JOptionPane.QUESTION_MESSAGE));
 	}
 
 	private static int parseInt(String input) {
