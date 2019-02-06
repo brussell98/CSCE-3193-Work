@@ -44,28 +44,24 @@ public class Car {
 		int mpg = getMPG();
 		double fuel = getFuelLevel();
 
-		double ratioTotal = Math.abs(xRatio) + Math.abs(yRatio);
 		double remainingDistance = Math.max(0, distance - mpg * fuel);
-		if (remainingDistance > 0) { // If the car can't travel the entire distance
-			gasTank.setLevel(0);
+		double distanceTravelled = distance - remainingDistance;
 
-			// Update the position
-			double distanceTravelled = distance - remainingDistance;
-			x += distanceTravelled * (xRatio / ratioTotal);
-			y += distanceTravelled * (yRatio / ratioTotal);
-
+		if (remainingDistance > 0)
 			System.out.printf("Ran out of gas after driving %.2f miles.\n", distanceTravelled);
 
-			return distanceTravelled;
-		}
+		double yToXRatio = Math.abs(yRatio / xRatio);
+		// Find a from a^2 + b^2 = c^2, where c is the distance travelled
+		double xChange = Math.sqrt(Math.pow(distanceTravelled, 2) / (1.0 + Math.pow(yToXRatio, 2)));
+		// Find change in y using the already computed x change and the ratio of y to x
+		double yChange = yToXRatio * xChange;
 
-		// Update the position
-		x += distance * (xRatio / ratioTotal);
-		y += distance * (yRatio / ratioTotal);
+		x += xRatio < 0.0 ? -xChange : xChange;
+		y += yRatio < 0.0 ? -yChange : yChange;
 
 		// Remove the fuel used for this drive
-		gasTank.setLevel(fuel - distance / mpg);
+		gasTank.setLevel(fuel - (double)distance / mpg);
 
-		return distance;
+		return distanceTravelled;
 	}
 }

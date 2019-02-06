@@ -11,7 +11,7 @@ public class Assignment3 {
 
 		String engineDescription = JOptionPane.showInputDialog("Enter the car's engine description");
 
-		int mpg = promptInt("Enter the engine's miles per Gallon");
+		int mpg = promptInt("Enter the engine's miles per gallon");
 
 		int maxSpeed = promptInt("Enter the car's max speed");
 
@@ -27,9 +27,9 @@ public class Assignment3 {
 
 		double[][] legValues = new double[legs][];
 		for (int i = 0; i < legs; i++) {
-			int dist = promptInt("Enter this leg's distance", "Leg " + (i + 1));
-			double xRatio = promptDouble("Enter this leg's X ratio", "Leg " + (i + 1));
-			double yRatio = promptDouble("Enter this leg's Y ratio", "Leg " + (i + 1));
+			int dist = promptInt("Enter the distance of leg " + (i + 1), "Leg " + (i + 1));
+			double xRatio = promptDouble("Enter the X ratio of leg " + (i + 1), "Leg " + (i + 1));
+			double yRatio = promptDouble("Enter the Y ratio of leg " + (i + 1), "Leg " + (i + 1));
 
 			legValues[i] = new double[] { dist, xRatio, yRatio };
 		}

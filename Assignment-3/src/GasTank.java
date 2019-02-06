@@ -15,6 +15,6 @@ public class GasTank {
 	}
 
 	public void setLevel(double newLevel) {
-		level = newLevel;
+		level = Math.max(newLevel, 0);
 	}
 }

@@ -3,11 +3,9 @@ import java.awt.Graphics;
 
 public class DrivePanel extends JPanel {
 	private int[][] legs;
-	private Car car;
 
 	public DrivePanel(double[][] legs, Car car) {
 		car.fillUp();
-		this.car = car;
 
 		this.legs = new int[legs.length][2];
 
@@ -15,9 +13,6 @@ public class DrivePanel extends JPanel {
 			int dist = (int)legs[i][0];
 			double xRatio = legs[i][1];
 			double yRatio = legs[i][2];
-
-			if (dist <= 0)
-				continue;
 
 			car.drive(dist, xRatio, yRatio);
 
