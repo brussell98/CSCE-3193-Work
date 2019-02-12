@@ -22,7 +22,7 @@ class Controller implements MouseListener {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			model.createSprite(e.getX(), e.getY());
 		} else if (SwingUtilities.isRightMouseButton(e)) {
-			// Gets here if right mouse button was clicked
+			model.fuelAllCars();
 		}
 	}
 

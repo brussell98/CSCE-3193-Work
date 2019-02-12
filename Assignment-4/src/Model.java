@@ -6,7 +6,7 @@ class Model {
 	private ArrayList<Sprite> sprites = new ArrayList<>();
 
 	Model() throws IOException {
-		sprites.add(new Car("Red car", 10, null));
+		sprites.add(new CopCar());
 	}
 
 	public void update(Graphics g) {
@@ -15,9 +15,14 @@ class Model {
 	}
 
 	public void createSprite(int x, int y) {
-		Sprite newSprite = new Car("Red car", 10, null);
+		Sprite newSprite = sprites.size() % 2 == 0 ? new CopCar() : new RobberCar();
 		newSprite.setX(x);
 		newSprite.setY(y);
 		sprites.add(newSprite);
+	}
+
+	public void fuelAllCars() {
+		for (Sprite sp :sprites)
+			((Car)sp).fillUp();
 	}
 }

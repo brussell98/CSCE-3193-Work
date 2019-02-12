@@ -5,8 +5,8 @@ public class Car extends Sprite {
 	private GasTank gasTank;
 	private Engine engine;
 
-	public Car(String desc, int fuelCap, Engine eng) {
-		super("red-car.jpg");
+	public Car(String desc, int fuelCap, Engine eng, String jpgName) {
+		super(jpgName);
 
 		description = desc.length() != 0 ? desc : "Generic car";
 		gasTank = new GasTank(fuelCap);
@@ -41,8 +41,8 @@ public class Car extends Sprite {
 		double remainingDistance = Math.max(0, distance - mpg * fuel);
 		double distanceTravelled = distance - remainingDistance;
 
-		if (remainingDistance > 0)
-			System.out.printf("Ran out of gas after driving %.2f miles.\n", distanceTravelled);
+		// if (remainingDistance > 0)
+		// 	System.out.printf("Ran out of gas after driving %.2f miles.\n", distanceTravelled);
 
 		double yToXRatio = Math.abs(yRatio / xRatio);
 		// Find a from a^2 + b^2 = c^2, where c is the distance travelled
@@ -60,10 +60,6 @@ public class Car extends Sprite {
 	}
 
 	public void update(Graphics g) {
-		// Move the sprite
-		setX(getX() + 1);
-		setY(getY() + 1);
-
 		super.update(g);
 	}
 }
