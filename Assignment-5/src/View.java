@@ -25,6 +25,7 @@ public class View extends JFrame implements ActionListener {
 		setSize(1000, 700);
 		getContentPane().add(new MyPanel(c));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addKeyListener(c);
 		setVisible(true);
 	}
 

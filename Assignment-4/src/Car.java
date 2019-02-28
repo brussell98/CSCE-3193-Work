@@ -41,8 +41,8 @@ public class Car extends Sprite {
 		double remainingDistance = Math.max(0, distance - mpg * fuel);
 		double distanceTravelled = distance - remainingDistance;
 
-		// if (remainingDistance > 0)
-		// 	System.out.printf("Ran out of gas after driving %.2f miles.\n", distanceTravelled);
+		if (fuel != 0 && remainingDistance > 0) // Only show first time to avoid console spam
+			System.out.printf("Ran out of gas after driving %.2f miles.\n", distanceTravelled);
 
 		double yToXRatio = Math.abs(yRatio / xRatio);
 		// Find a from a^2 + b^2 = c^2, where c is the distance travelled
