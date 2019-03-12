@@ -9,21 +9,40 @@
 			font-family: 'Roboto', 'Open Sans', 'Helvetica', sans-serif;
 		}
 		body {
-			margin: 60px auto 40px;
+			margin: 60px auto;
 			max-width: 640px
 		}
 		h1 {
 			font-family: 'Roboto', 'Open Sans', 'Helvetica', sans-serif;
+			margin-bottom: 40px;
 			text-align: center;
 		}
 		a {
 			color: lightblue !important;
+		}
+		button {
+			background-color: hsl(0, 0%, 100%);
+			border: 1px solid hsl(0, 0%, 60%);
+			border-radius: 3px;
+			padding: 4px 6px;
+		}
+		button:hover {
+			cursor: pointer;
+		}
+		button + button {
+			margin-left: 10px;
+		}
+		button:focus {
+			outline: none;
 		}
 		pre {
 			background-color: hsla(0, 0%, 10%, .5);
 			border-radius: 3px;
 			padding: 6px 10px;
 			white-space: pre-wrap;
+		}
+		.quiz {
+			margin-top: 80px;
 		}
 		.question {
 			border-top: 1px solid gray;
@@ -32,11 +51,15 @@
 		.question .options {
 			text-align: center;
 		}
-		.question.with-images img {
-			height: 213px;
-		}
 		.question.with-images img:hover {
 			cursor: pointer;
+		}
+		.selected {
+			border: 2px solid lightblue;
+		}
+		.reset {
+			margin-top: 20px;
+			text-align: center;
 		}
 	</style>
 </head>
@@ -64,10 +87,10 @@ fn main() {
 	println!("something(2, 5) = {}", ret);
 }</pre>
 			<div class="options">
-				<button onclick="answer(1, 1)">something(2, 5) = 7</button>
-				<button onclick="answer(1, 2)">Does not compile</button>
-				<button onclick="answer(1, 3)">something(2, 5) = 6</button>
-				<button onclick="answer(1, 4)">something(2, 5) = 10</button>
+				<button class="option" onclick="answer(1, 1)">something(2, 5) = 7</button>
+				<button class="option" onclick="answer(1, 2)">Does not compile</button>
+				<button class="option" onclick="answer(1, 3)">something(2, 5) = 6</button>
+				<button class="option" onclick="answer(1, 4)">something(2, 5) = 10</button>
 			</div>
 			<p class="feedback"></p>
 		</div>
@@ -75,38 +98,56 @@ fn main() {
 		<div class="question" id="q2">
 			<p>Which of the following is <strong>not</strong> a valid way to create a vector?</p>
 			<div class="options">
-				<button onclick="answer(2, 1)">Vec::new()</button>
-				<button onclick="answer(2, 2)">vec![1, 2, 3]</button>
-				<button onclick="answer(2, 3)">vec!(1, 2, 3)</button>
-				<button onclick="answer(2, 4)">Vec&lt;i32&gt;::new()</i32></button>
+				<button class="option" onclick="answer(2, 1)">Vec::new()</button>
+				<button class="option" onclick="answer(2, 2)">vec![1, 2, 3]</button>
+				<button class="option" onclick="answer(2, 3)">vec!(1, 2, 3)</button>
+				<button class="option" onclick="answer(2, 4)">Vec::with_capacity(10)</button>
 			</div>
 			<p class="feedback"></p>
 		</div>
 
 		<div class="question with-images" id="q3">
-			<p>Which code sample below does not compile?</p>
+			<p>Which code sample below does not compile? (click to answer)</p>
 			<div class="options">
-				<img onclick="answer(3, 1)" src="./images/code1.jpg" alt="Option 1" />
-				<img onclick="answer(3, 2)" src="./images/code2.jpg" alt="Option 2" />
+				<img class="option" onclick="answer(3, 1)" src="./images/code1.jpg" alt="Option 1" />
+				<img class="option" onclick="answer(3, 2)" src="./images/code2.jpg" alt="Option 2" />
 			</div>
 			<p class="feedback"></p>
+		</div>
+
+		<div class="reset">
+			<button onclick="reset()">Reset</button>
 		</div>
 	</div>
 
 	<script>
 		const key = {
 			1: 3,
-			2: 4,
+			2: 3,
 			3: 1
 		};
 
 		function answer(question, option) {
 			const fbElem = document.querySelector(`#q${question} .feedback`);
+			const button = document.querySelector(`#q${question} .option:nth-child(${option})`);
+
+			for (const elem of document.querySelectorAll(`#q${question} .option`))
+				elem.classList.remove('selected');
+
+			button.classList.add('selected');
 
 			if (option !== key[question])
-				fbElem.textContent = 'Incorrect, try again';
+				fbElem.textContent = '✗ Incorrect, try again';
 			else
-				fbElem.textContent = 'Correct!';
+				fbElem.textContent = '✓ Correct!';
+		}
+
+		function reset() {
+			for (const elem of document.querySelectorAll(`.question .option`))
+				elem.classList.remove('selected');
+
+			for (const elem of document.querySelectorAll('.feedback'))
+				elem.textContent = '';
 		}
 	</script>
 </body>
