@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Brandon Russell's page</title>
+	<style>
+		html {
+			background-color: #2b2b31;
+			color: #fff;
+			font-family: 'Roboto', 'Open Sans', 'Helvetica', sans-serif;
+		}
+		body {
+			margin: 60px auto 40px;
+			max-width: 640px
+		}
+		h1 {
+			font-family: 'Roboto', 'Open Sans', 'Helvetica', sans-serif;
+			text-align: center;
+		}
+		a {
+			color: lightblue !important;
+		}
+		pre {
+			background-color: hsla(0, 0%, 10%, .5);
+			border-radius: 3px;
+			padding: 6px 10px;
+			white-space: pre-wrap;
+		}
+		.question {
+			border-top: 1px solid gray;
+			padding: 20px 0;
+		}
+		.question .options {
+			text-align: center;
+		}
+		.question.with-images img {
+			height: 213px;
+		}
+		.question.with-images img:hover {
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<h1>Brandon Russell's page</h1>
+	<div class="intro">
+		<p>The Rust programming language is a blazingly fast and memory-efficient programming language. Unlike C/C++, Rust guarantees that your code is memory-safe and thread-safe. Rust also has a friendly compiler, a great toolset, great documentation, and more.</p>
+		<a href="https://www.rust-lang.org/" target="_blank">Visit the Rust website</a>
+	</div>
+	<div class="quiz">
+		<p>Want to test your knowledge of Rust? Read a bit of the <a href="https://doc.rust-lang.org/book/" target="_blank">Rust docs</a> and try answering the questions below!</p>
+
+		<div class="question" id="q1">
+			<p>What will be output by the code below?</p>
+			<pre>fn something(first: i32, second: i32) -> i32 {
+	if second % 2 == 0 {
+		first + second
+	} else {
+		something(first, second - 1)
+	}
+}
+
+fn main() {
+	let ret = something(2, 5);
+	println!("something(2, 5) = {}", ret);
+}</pre>
+			<div class="options">
+				<button onclick="answer(1, 1)">something(2, 5) = 7</button>
+				<button onclick="answer(1, 2)">Does not compile</button>
+				<button onclick="answer(1, 3)">something(2, 5) = 6</button>
+				<button onclick="answer(1, 4)">something(2, 5) = 10</button>
+			</div>
+			<p class="feedback"></p>
+		</div>
+
+		<div class="question" id="q2">
+			<p>Which of the following is <strong>not</strong> a valid way to create a vector?</p>
+			<div class="options">
+				<button onclick="answer(2, 1)">Vec::new()</button>
+				<button onclick="answer(2, 2)">vec![1, 2, 3]</button>
+				<button onclick="answer(2, 3)">vec!(1, 2, 3)</button>
+				<button onclick="answer(2, 4)">Vec&lt;i32&gt;::new()</i32></button>
+			</div>
+			<p class="feedback"></p>
+		</div>
+
+		<div class="question with-images" id="q3">
+			<p>Which code sample below does not compile?</p>
+			<div class="options">
+				<img onclick="answer(3, 1)" src="./images/code1.jpg" alt="Option 1" />
+				<img onclick="answer(3, 2)" src="./images/code2.jpg" alt="Option 2" />
+			</div>
+			<p class="feedback"></p>
+		</div>
+	</div>
+
+	<script>
+		const key = {
+			1: 3,
+			2: 4,
+			3: 1
+		};
+
+		function answer(question, option) {
+			const fbElem = document.querySelector(`#q${question} .feedback`);
+
+			if (option !== key[question])
+				fbElem.textContent = 'Incorrect, try again';
+			else
+				fbElem.textContent = 'Correct!';
+		}
+	</script>
+</body>
+</html>
