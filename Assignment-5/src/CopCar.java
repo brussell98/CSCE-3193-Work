@@ -35,9 +35,9 @@ public class CopCar extends Car {
 		int x = getX();
 		int y = getY();
 
-		if (x <= 0 || x >= width - getImage().getWidth(null))
+		if (x <= 0 || x >= width - 60)
 			posX = !posX;
-		if (y <= 0 || y >= height - getImage().getHeight(null))
+		if (y <= 0 || y >= height - 60)
 			posY = !posY;
 
 		drive(2, posX ? xRatio : -xRatio, posY ? yRatio : -yRatio);

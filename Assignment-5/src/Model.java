@@ -5,9 +5,11 @@ import java.util.Iterator;
 
 class Model {
 	private ArrayList<Sprite> sprites = new ArrayList<>();
+	private boolean isNextCop;
 
 	Model() throws IOException {
 		sprites.add(new Bank());
+		isNextCop = false;
 	}
 
 	public void initialize() {
@@ -15,6 +17,8 @@ class Model {
 			sprites = new ArrayList<>();
 			sprites.add(new Bank());
 		}
+
+		isNextCop = false;
 
 		RobberCar.totalCaptured = 0;
 		RobberCar.totalEscaped = 0;
@@ -29,8 +33,11 @@ class Model {
 
 	public void createSprite(int x, int y) {
 		synchronized (sprites) {
-			Sprite newSprite = sprites.size() % 2 == 0 ? new CopCar(x, y) : new RobberCar();
+			// Originally used size % 2 == 0, but deleting sprites of escaped cars broke that
+			Sprite newSprite = isNextCop ? new CopCar(x, y) : new RobberCar();
 			sprites.add(newSprite);
+
+			isNextCop = !isNextCop;
 		}
 	}
 

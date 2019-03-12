@@ -4,6 +4,7 @@ import java.util.Random;
 public class RobberCar extends Car {
 	public static int totalCaptured = 0;
 	public static int totalEscaped = 0;
+	private static Random rand = new Random();
 
 	private int xRatio;
 	private int yRatio;
@@ -18,7 +19,7 @@ public class RobberCar extends Car {
 		setX(300);
 		setY(300);
 
-		Random rand = new Random();
+		// Creating a new Random here breaks things with threads
 		xRatio = rand.nextInt(10) - 5;
 		yRatio = rand.nextInt(10) - 5;
 

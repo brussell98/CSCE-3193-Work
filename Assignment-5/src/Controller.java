@@ -23,7 +23,7 @@ class Controller implements MouseListener, KeyListener {
 		if (SwingUtilities.isLeftMouseButton(e))
 			model.createSprite(e.getX(), e.getY());
 		else if (SwingUtilities.isRightMouseButton(e))
-			model.updateScene(view.getWidth(), view.getHeight());
+			model.updateScene(view.getContentPane().getWidth(), view.getContentPane().getHeight());
 
 		view.repaint();
 	}

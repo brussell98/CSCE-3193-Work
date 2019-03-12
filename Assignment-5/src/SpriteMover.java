@@ -9,7 +9,7 @@ public class SpriteMover implements Runnable {
 
 	public void run() {
 		while (true) {
-			model.updateScene(view.getWidth(), view.getHeight());
+			model.updateScene(view.getContentPane().getWidth(), view.getContentPane().getHeight());
 			view.repaint();
 
 			try {
