@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Brandon Russell's Assignment 7</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+
+	</style>
+</head>
+<body>
+	<h1>Brandon Russell's Assignment 7</h1>
+	<div class="new-car">
+		<p class="header">New Car</p>
+		<form>
+			<div class="field">
+				<label for="engine">Engine Description</label>
+				<input type="text" name="engine" placeholder="What engine is in this car?" />
+			</div>
+			<div class="field">
+				<label for="mpg">Miles per Gallon</label>
+				<input type="number" name="mpg" placeholder="What is this car's MPG?" />
+			</div>
+			<div class="field">
+				<label for="maxSpeed">Max speed (mph)</label>
+				<input type="number" name="maxSpeed" placeholder="What is the max speed of this car?" />
+			</div>
+			<div class="field">
+				<label for="car">Car Description</label>
+				<input type="text" name="car" placeholder="Describe this car" />
+			</div>
+			<div class="field">
+				<label for="maxFuel">Fuel Capacity</label>
+				<input type="number" name="maxFuel" placeholder="What is this car's fuel capacity?" />
+			</div>
+			<div class="submit">
+				<button onclick="createCar()">Create the car</button>
+			</div>
+		</form>
+	</div>
+</body>
+<script>
+	// Ewww, old non-es6 function-based classes...
+	function Engine(desc = 'Generic engine', mpgInput = 0, speed = 0) {
+		const description = desc;
+		const mpg = Math.max(mpgInput, 0);
+		const maxSpeed = Math.max(speed, 0);
+
+		this.getDescription = () => `${description} (MPG: ${mpg}, Max speed: ${maxSpeed})`;
+		this.getMPG = () => mpg;
+		this.getMaxSpeed = () => maxSpeed;
+	}
+
+	function GasTank(cap = 0) {
+		const capacity = Math.max(cap, 0);
+		let level = 0;
+
+		this.getCapacity = () => capacity;
+		this.getLevel = () => level;
+		this.setLevel = newLevel => level = newLevel;
+	}
+
+	function Car(desc, fuel, engine = new Engine()) {
+		let x, y = 0;
+		const description = desc;
+		const gasTank = new GasTank(fuel);
+		const engine = engine;
+
+		this.getDescription = () => `${description} (engine: ${engine.getDescription()}), fuel: ${gasTank.getLevel().toFixed(2)}/${gasTank.getCapacity()}, location: (${x}, ${y})`;
+		this.getX = () => x;
+		this.getY = () => y;
+		this.getFuelLevel = () => gasTank.getLevel();
+		this.getMPG = () => engine.getMPG();
+		this.fillUp = () => gasTank.setLevel(gasTank.getCapacity());
+		this.getMaxSpeed = () => engine.getMaxSpeed();
+		this.drive = (dist, xr, yr) => {
+			// TODO: Insert most recent drive code to avoid issues fixed in later assignments
+		};
+	}
+
+	function createCar() {
+		const engineDesc = document.getElementsByName('engine')[0];
+		const mpg = document.getElementsByName('mpg')[0];
+		const speed = document.getElementsByName('maxSpeed')[0];
+		const carDesc = document.getElementsByName('car')[0];
+		const fuel = document.getElementsByName('maxFuel')[0];
+
+		const car = new Car(carDesc, fuel, new Engine(engineDesc, parseInt(mpg), parseInt(speed)));
+		car.fillUp();
+
+		console.log(car);
+		console.log(car.getDescription());
+	}
+</script>
+</html>
