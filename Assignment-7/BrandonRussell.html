@@ -6,11 +6,56 @@
 	<title>Brandon Russell's Assignment 7</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
-
+		html {
+			font-family: 'Roboto', 'Open Sans', sans-serif;
+			text-align: center;
+			margin: 40px 10px;
+		}
+		h1 {
+			font-size: 42px;
+			margin-bottom: 3rem;
+		}
+		.hidden {
+			display: none;
+		}
+		.field {
+			display: flex;
+			flex-wrap: nowrap;
+			margin: 12px auto;
+			max-width: 600px;
+		}
+		.field label {
+			margin-right: 6px;
+		}
+		.field label:after {
+			content: ":";
+		}
+		.field input {
+			padding: 2px 4px;
+			border: 1px solid #666;
+			border-radius: 3px;
+			flex-grow: 1;
+		}
+		.header {
+			font-weight: 500;
+			font-size: 24px;
+		}
+		button {
+			padding: 4px 8px;
+			border: 1px solid #666;
+			border-radius: 3px;
+		}
+		button:hover {
+			cursor: pointer;
+		}
+		.control-car {
+			margin-top: 60px;
+		}
 	</style>
 </head>
 <body>
 	<h1>Brandon Russell's Assignment 7</h1>
+
 	<div class="new-car">
 		<p class="header">New Car</p>
 		<form>
@@ -31,66 +76,155 @@
 				<input type="text" name="car" placeholder="Describe this car" />
 			</div>
 			<div class="field">
-				<label for="maxFuel">Fuel Capacity</label>
+				<label for="maxFuel">Fuel Capacity (gallons)</label>
 				<input type="number" name="maxFuel" placeholder="What is this car's fuel capacity?" />
 			</div>
 			<div class="submit">
-				<button onclick="createCar()">Create the car</button>
+				<button type="button" onclick="createCar()">Create the car</button>
 			</div>
 		</form>
 	</div>
+
+	<div class="car">
+		<p><b>Car:</b> <span></span></p>
+	</div>
+
+	<div class="control-car hidden">
+		<p class="header">Drive Car</p>
+		<form>
+			<div class="field">
+				<label for="distance">Miles to drive</label>
+				<input type="text" name="distance" placeholder="How far should the car drive?" />
+			</div>
+			<div class="field">
+				<label for="x-ratio">X Ratio</label>
+				<input type="number" name="x-ratio" placeholder="Ratio driven on the X axis" />
+			</div>
+			<div class="field">
+				<label for="y-ratio">Y Ratio</label>
+				<input type="number" name="y-ratio" placeholder="Ratio driven on the Y axis" />
+			</div>
+			<div class="submit">
+				<button type="button" onclick="driveCar()">Drive the car</button>
+			</div>
+		</form>
+	</div>
+
+	<div class="car2 hidden">
+		<p><b>Car after driving:</b> <span></span></p>
+	</div>
 </body>
 <script>
-	// Ewww, old non-es6 function-based classes...
-	function Engine(desc = 'Generic engine', mpgInput = 0, speed = 0) {
-		const description = desc;
-		const mpg = Math.max(mpgInput, 0);
-		const maxSpeed = Math.max(speed, 0);
+	/** @type {Car} */
+	let currentCar;
+
+	// Ew, old non-es6 function-based classes...
+	// Not using default function parameter values because of "" and undefined and NaN
+
+	/**
+	 * An engine for a car
+	 * @class
+	 */
+	function Engine(desc, mpgInput, speed) {
+		const description = desc || 'Generic engine';
+		const mpg = Math.max(mpgInput || 0, 0);
+		const maxSpeed = Math.max(speed || 0, 0);
 
 		this.getDescription = () => `${description} (MPG: ${mpg}, Max speed: ${maxSpeed})`;
 		this.getMPG = () => mpg;
 		this.getMaxSpeed = () => maxSpeed;
 	}
 
-	function GasTank(cap = 0) {
-		const capacity = Math.max(cap, 0);
+	/**
+	 * A gas tank for a car
+	 * @class
+	 */
+	function GasTank(cap) {
+		const capacity = Math.max(cap || 0, 0);
 		let level = 0;
 
 		this.getCapacity = () => capacity;
 		this.getLevel = () => level;
-		this.setLevel = newLevel => level = newLevel;
+		this.setLevel = newLevel => level = Math.min(Math.max(newLevel, 0), capacity);
 	}
 
-	function Car(desc, fuel, engine = new Engine()) {
-		let x, y = 0;
-		const description = desc;
+	/**
+	 * A car
+	 * @class
+	 */
+	function Car(desc, fuel, eng) {
+		let x = 0;
+		let y = 0;
+		const description = desc || 'Generic car';
 		const gasTank = new GasTank(fuel);
-		const engine = engine;
+		const engine = eng || new Engine();
 
-		this.getDescription = () => `${description} (engine: ${engine.getDescription()}), fuel: ${gasTank.getLevel().toFixed(2)}/${gasTank.getCapacity()}, location: (${x}, ${y})`;
+		this.getDescription = () => `${description} (engine: ${engine.getDescription()}), fuel: ${gasTank.getLevel().toFixed(2)}/${gasTank.getCapacity()}, location: (${x.toFixed(2)}, ${y.toFixed(2)})`;
 		this.getX = () => x;
 		this.getY = () => y;
 		this.getFuelLevel = () => gasTank.getLevel();
 		this.getMPG = () => engine.getMPG();
 		this.fillUp = () => gasTank.setLevel(gasTank.getCapacity());
 		this.getMaxSpeed = () => engine.getMaxSpeed();
+
+		/**
+		 * Cause the car to drive the given distance, in the given direction
+		 * @param {Number} dist The distance to drive in miles
+		 * @param {Number} xr The x ratio
+		 * @param {Number} yr The y ratio
+		 * @returns {Number} The actual distance driven in miles
+		 */
 		this.drive = (dist, xr, yr) => {
-			// TODO: Insert most recent drive code to avoid issues fixed in later assignments
+			const mpg = this.getMPG();
+			let fuel = this.getFuelLevel();
+
+			const distRemain = Math.max(dist - mpg * fuel, 0);
+			const distDriven = dist - distRemain;
+
+			if (distRemain > 0)
+				alert(`Ran out of gas after travelling ${distDriven.toFixed(2)} miles.`);
+
+			const yToXRatio = Math.abs(yr / xr);
+			const xChange = Math.sqrt(Math.pow(distDriven, 2) / (1 + Math.pow(yToXRatio, 2)));
+			const yChange = yToXRatio * xChange;
+
+			x += xr < 0 ? -xChange : xChange;
+			y += yr < 0 ? -yChange : yChange;
+
+			gasTank.setLevel(fuel - dist / mpg);
+
+			return distDriven;
 		};
 	}
 
 	function createCar() {
-		const engineDesc = document.getElementsByName('engine')[0];
-		const mpg = document.getElementsByName('mpg')[0];
-		const speed = document.getElementsByName('maxSpeed')[0];
-		const carDesc = document.getElementsByName('car')[0];
-		const fuel = document.getElementsByName('maxFuel')[0];
+		[...document.querySelectorAll('.hidden')].map(el => el.classList.remove('hidden'));
+
+		const engineDesc = document.getElementsByName('engine')[0].value;
+		const mpg = parseInt(document.getElementsByName('mpg')[0].value);
+		const speed = parseInt(document.getElementsByName('maxSpeed')[0].value);
+		const carDesc = document.getElementsByName('car')[0].value;
+		const fuel = parseInt(document.getElementsByName('maxFuel')[0].value);
 
 		const car = new Car(carDesc, fuel, new Engine(engineDesc, parseInt(mpg), parseInt(speed)));
 		car.fillUp();
 
-		console.log(car);
-		console.log(car.getDescription());
+		document.querySelector('.car p span').textContent = car.getDescription();
+
+		currentCar = car;
+	}
+
+	function driveCar() {
+		if (!currentCar)
+			return;
+
+		const dist = parseInt(document.getElementsByName('distance')[0].value);
+		const xr = parseInt(document.getElementsByName('x-ratio')[0].value);
+		const yr = parseInt(document.getElementsByName('y-ratio')[0].value);
+
+		currentCar.drive(dist, xr, yr);
+
+		document.querySelector('.car2 p span').textContent = currentCar.getDescription();
 	}
 </script>
 </html>
