@@ -1,0 +1,142 @@
+<html>
+<head>
+	<script src="assignment8.js"></script>
+	<script>
+	
+	//////////////////////////////////////////////////////////////////////
+	//  These are example test cases which will be changed by the grader!!
+
+	function reverseArrayTest() {
+		var outStr = "Trying reverseArray([1,2,3,4]) - correct answer is '4,3,2,1':<br>";
+		var out = reverseArray([1,2,3,4]);
+		outStr += "Got answer: " + out + "<br>";
+		
+		outStr += "Trying reverseArray(['a',22,'z',100]) - correct answer is '100,z,22,a':<br>";
+		out = reverseArray(['a',22,'z',100]);
+		outStr += "Got answer: " + out + "<br>";
+
+		document.getElementById("reverseArrayOut").innerHTML = outStr;
+	}
+	
+	function findMinTest() {
+		var outStr = "Trying findMin([100,4,23,42,2,49]) - correct answer is 2:<br>";
+		var out = findMin([100,4,23,42,2,49]);
+		outStr += "Got answer: " + out + "<br>";
+		
+		outStr += "Trying findMin([99]) - correct answer is 99:<br>";
+		out = findMin([99]);
+		outStr += "Got answer: " + out + "<br>";
+
+		document.getElementById("findMinOut").innerHTML = outStr;
+	}
+	
+	function stringFromArraysTest() {
+		var outStr = 'Trying stringFromArrays(["b",221,4],[1,"foo",22]) - correct answer is "b1221foo422":<br>';
+		var out = stringFromArrays(["b",221,4],[1,"foo",22]);
+		outStr += "Got answer: " + out + "<br>";
+		
+		outStr += 'Trying stringFromArrays(["a","b","c"],[4,5,6]) - correct answer is "a4b5c6":<br>';
+		out = stringFromArrays(["a","b","c"],[4,5,6]);
+		outStr += "Got answer: " + out + "<br>";
+
+		document.getElementById("stringFromArraysOut").innerHTML = outStr;
+	}
+	
+	function applyToArrayTest() {
+		var outStr = "Trying applyToArray([1,2,3])(add2) - correct answer is [3,4,5]:<br>";
+		try {
+			var f = applyToArray([1,2,3]);
+			var out = f(add2);
+			outStr += "Got answer: " + out + "<br>";
+			
+			outStr += "Trying applyToArray([10,0,2])(mult4) - correct answer is [40,0,8]:<br>";
+			f = applyToArray([10,0,2]);
+			out = f(mult4);
+			outStr += "Got answer: " + out + "<br>";
+
+			document.getElementById("applyToArrayOut").innerHTML = outStr;
+		} catch (e) {
+			document.getElementById("applyToArrayOut").innerHTML = "Exception occurred: " + e;
+		}
+	}
+	
+	function computeMaxArrTest() {
+		try {
+			var outStr = "Trying computeMaxArr(mult4,add2)([-3,-2,-1,0,1,2,3]) - correct answer is '-1,0,1,2,4,8,12':<br>";
+			var f = computeMaxArr(add2,mult4);
+			var out = f([-3,-2,-1,0,1,2,3]);
+			outStr += "Got answer: " + out + "<br>";
+			
+			outStr += "Trying computeMaxArr(add2,square)([10,0,5,-3,6,-1]) - correct answer is '100,2,25,9,36,1':<br>";
+			f = computeMaxArr(add2,square);
+			out = f([10,0,5,-3,6,-1]);
+			outStr += "Got answer: " + out + "<br>";
+
+			document.getElementById("computeMaxArrOut").innerHTML = outStr;
+		} catch (e) {
+			document.getElementById("computeMaxArrOut").innerHTML = "Exception occurred: " + e;
+		}
+	}
+	
+	function makeClosureTest() {
+		try {
+			var outStr = "var closure = makeClosure()<br>";
+			var closure = makeClosure();
+			outStr += "outStr = closure[0](1, 2)<br>";
+			var out = closure[0](1, 2);
+			outStr += "(outStr is: " + out + ", and should be '3')<br>";
+			outStr += "outStr = closure[0](3, 4)<br>";
+			out = closure[0](3, 4);
+			outStr += "(outStr is: " + out + ", and should be '3, 7')<br>";
+			outStr += "closure[1]()<br>";
+			closure[1]();
+			outStr += "(counter should now equal 1)<br>";
+			outStr += "closure[1]()<br>";
+			closure[1]();
+			outStr += "(counter should now equal 2)<br>";
+			outStr += "outStr = closure[0](5, 6)<br>";
+			out = closure[0](5, 6);
+			outStr += "(outStr is: " + out + ", and should be '3, 7, 11')<br>";
+			outStr += "closure[1]()<br>";
+			closure[1]();
+			outStr += "(counter should now equal 3)<br>";
+			outStr += "outStr = closure[0](7, 8)<br>";
+			out = closure[0](7, 8);
+			outStr += "(outStr is: " + out + ", and should be '3, 7, 11')<br>";
+
+			document.getElementById("makeClosureOut").innerHTML = outStr;
+		} catch (e) {
+			document.getElementById("makeClosureOut").innerHTML = "Exception occurred: " + e;
+		}
+	}
+
+	</script>
+</head>
+<body>
+	<h1>Test Page for Assignment 8</h1>
+	<p>
+		Click here to test the reverseArray function: <button onclick="reverseArrayTest();">reverseArray!</button><br>
+		<div id="reverseArrayOut"></div>
+	</p>
+	<p>
+		Click here to test the findMin function: <button onclick="findMinTest();">findMin!</button><br>
+		<div id="findMinOut"></div>
+	</p>
+	<p>
+		Click here to test the stringFromArrays function: <button onclick="stringFromArraysTest();">stringFromArrays!</button><br>
+		<div id="stringFromArraysOut"></div>
+	</p>
+	<p>
+		Click here to test the applyToArray function: <button onclick="applyToArrayTest();">applyToArray!</button><br>
+		<div id="applyToArrayOut"></div>
+	</p>
+	<p>
+		Click here to test the computeMaxArr function: <button onclick="computeMaxArrTest();">computeMaxArr!</button><br>
+		<div id="computeMaxArrOut"></div>
+	</p>
+	<p>
+		Click here to test the makeClosure function: <button onclick="makeClosureTest();">makeClosure!</button><br>
+		<div id="makeClosureOut"></div>
+	</p>
+</body>
+</html>
