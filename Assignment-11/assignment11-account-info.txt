@@ -1,0 +1,5 @@
+patitz;pass1;Matthew;Patitz;yellow;Title for grading!!;http://self-assembly.net/mpatitz/Matt-DC_web.jpg
+buser;pass2;Bob;User;yellow;Welcome to Bob's Page;https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcT8jbA3GOTTvnWGU_E142s3t-l6CWxNSffpf4g037I-pICAWA3wdA
+user1;pass1;User;One;blue;Welcome to the Assignment 11 PHP page!;http://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Stick_Figure.svg/170px-Stick_Figure.svg.png
+user2;pass2;User;Two;white;Welcome to the Assignment 11 PHP page!;http://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Stick_Figure.svg/170px-Stick_Figure.svg.png
+foo;foo;foo;foo;white;Welcome to Matt Patitz's Assignment 11 PHP page!;http://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Stick_Figure.svg/170px-Stick_Figure.svg.png
