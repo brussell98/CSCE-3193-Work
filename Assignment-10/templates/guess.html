@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Assignment 10</title>
+	<style>
+		.container {
+			margin: 40px auto;
+			max-width: 400px;
+			text-align: center;
+			font-family: Roboto, Helvetica, sans-serif
+		}
+
+		h1 {
+			font-size: 36px;
+			margin: 0 0 20px;
+		}
+
+		form {
+			margin: 40px 10px 20px;
+		}
+
+		.form-item {
+			margin: 20px 0;
+			display: flex;
+			width: 100%;
+			align-items: center;
+		}
+
+		.form-item label {
+			margin-right: 10px;
+		}
+
+		.form-item input {
+			flex-grow: 1;
+			padding: 2px 4px;
+		}
+
+		.form-item button[type=submit] {
+			width: 100%;
+			border: 1px solid #333;
+			background: #ccc;
+			padding: 4px 6px;
+		}
+
+		.form-item button[type=submit]:hover {
+			cursor: pointer;
+		}
+
+		.error {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Hi {{ first }} {{ last }}</h1>
+		<p>A random number from 1 to 5 has been generated. Can you guess it?</p>
+		<form action="" method="post">
+			<div class="form-item">
+				<label for="guess">Guess</label>
+				<input type="number" name="guess" placeholder="A number from 1 to 5" id="guess-input" autocomplete="off">
+			</div>
+			<input type="hidden" name="answer" id="answer-input" value="{{ number }}">
+			<div class="form-item">
+				<button type="submit">Check</button>
+			</div>
+		</form>
+		{% if failed %}
+			<p class="error">The number is not {{ guess }}</p>
+		{% endif %}
+	</div>
+</body>
+</html>

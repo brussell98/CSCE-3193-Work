@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Assignment 10</title>
+	<style>
+		.container {
+			margin: 40px auto;
+			max-width: 400px;
+			text-align: center;
+			font-family: Roboto, Helvetica, sans-serif
+		}
+		h1 {
+			font-size: 36px;
+			margin: 0 0 20px;
+		}
+		form {
+			margin: 40px 10px 20px;
+		}
+		.form-item {
+			margin: 20px 0;
+			display: flex;
+			width: 100%;
+			align-items: center;
+		}
+		.form-item label {
+			margin-right: 10px;
+		}
+		.form-item input {
+			flex-grow: 1;
+			padding: 2px 4px;
+		}
+		.form-item button[type=submit] {
+			width: 100%;
+			border: 1px solid #333;
+			background: #ccc;
+			padding: 4px 6px;
+		}
+		.form-item button[type=submit]:hover {
+			cursor: pointer;
+		}
+		.error {
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Assignment 10</h1>
+		<p>Input your name to begin</p>
+		<form action="" method="get" onsubmit="return validate(event)">
+			<div class="form-item">
+				<label for="first">First name</label>
+				<input type="text" name="first" value="Brandon" id="first-input" autocomplete="off">
+			</div>
+			<div class="form-item">
+				<label for="last">Last name</label>
+				<input type="text" name="last" value="Russell" id="last-input" autocomplete="off">
+			</div>
+			<div class="form-item">
+				<button type="submit">Continue</button>
+			</div>
+		</form>
+		<p class="error"></p>
+	</div>
+</body>
+<script>
+	function validate(e) {
+		if (document.getElementById('first-input').value && document.getElementById('last-input').value)
+			return true;
+
+		e.preventDefault();
+		document.querySelector('.error').textContent = 'First and land name required';
+		return false;
+	}
+</script>
+</html>
